@@ -1379,6 +1379,7 @@ exports.run = async () => {
     const pullRequest = github_1.context.payload.pull_request
         .body;
     console.log("Pull number", pullRequest.pull_request);
+    console.log("Merged", pullRequest.pull_request.merged, pullRequest.merged);
 };
 exports.run()
     .then(() => { })
