@@ -1,20 +1,11 @@
-# 🎬 GitHub Actions Starter
+# 🗑️🎬 Delete Merged Action
 
-GitHub Actions starter for TypeScript with automated releases
+GitHub Action to automatically delete merged branches.
 
 [![Build CI](https://github.com/koj-co/delete-merged-action/workflows/Build%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Build+CI%22)
 [![Test CI](https://github.com/koj-co/delete-merged-action/workflows/Test%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Test+CI%22)
 [![Release CI](https://github.com/koj-co/delete-merged-action/workflows/Release%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Release+CI%22)
 [![Node CI](https://github.com/koj-co/delete-merged-action/workflows/Node%20CI/badge.svg)](https://github.com/koj-co/delete-merged-action/actions?query=workflow%3A%22Node+CI%22)
-
-## ⭐ Features
-
-- Write source in TypeScript
-- Auto-publish compiled code to `dist/`
-- Semantic Release to GitHub and npm
-- Includes Actions Core and Octokit
-
-[**Create a repository using this template →**](https://github.com/koj-co/delete-merged-action/generate)
 
 ## 📄 License
 
