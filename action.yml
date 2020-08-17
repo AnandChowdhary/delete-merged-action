@@ -1,4 +1,4 @@
-name: "Action.ts"
+name: "delete-merged-action"
 description: "GitHub Actions starter for TypeScript with automated releases"
 author: "Koj <https://github.com/koj.co>"
 inputs:
