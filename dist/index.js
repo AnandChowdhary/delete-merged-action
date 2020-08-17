@@ -1380,6 +1380,19 @@ exports.run = async () => {
         .body;
     console.log("Pull number", pullRequest.pull_request);
     console.log("Merged", pullRequest.pull_request.merged, pullRequest.merged);
+    /**
+     * Pull request has been merged
+     */
+    if (pullRequest.pull_request.merged) {
+        try {
+            await octokit.git.deleteRef({
+                owner: github_1.context.repo.owner,
+                repo: github_1.context.repo.repo,
+                ref: pullRequest.pull_request.base.ref,
+            });
+        }
+        catch (error) { }
+    }
 };
 exports.run()
     .then(() => { })
