@@ -19,6 +19,11 @@ export const run = async () => {
     .body as EventPayloads.WebhookPayloadPullRequest;
 
   console.log("Pull number", pullRequest.pull_request);
+  console.log(
+    "Merged",
+    pullRequest.pull_request.merged,
+    (pullRequest as any).merged
+  );
 };
 
 run()
