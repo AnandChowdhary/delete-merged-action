@@ -1,7 +1,7 @@
 {
   "name": "delete-merged-action",
   "version": "1.0.2",
-  "description": "Starter for GitHub Actions with TypeScript and automated releases",
+  "description": "Automatically delete merged branches (highly configurable)",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -13,6 +13,8 @@
     "url": "git+https://github.com/koj-co/delete-merged-action.git"
   },
   "keywords": [
+    "merge",
+    "branch",
     "github",
     "github actions",
     "nodejs",
