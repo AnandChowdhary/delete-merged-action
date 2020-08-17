@@ -1,8 +1,5 @@
 name: Test CI
-on:
-  push:
-    branches:
-      - master
+on: pull_request
 jobs:
   test:
     name: Test action
