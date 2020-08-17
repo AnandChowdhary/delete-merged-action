@@ -26,8 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: ./
-        with:
-          milliseconds: 1000
+      - uses: koj-co/delete-merged-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
