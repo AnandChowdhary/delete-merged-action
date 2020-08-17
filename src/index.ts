@@ -1,5 +1,6 @@
-import { getInput, debug, setFailed, setOutput } from "@actions/core";
-import { getOctokit } from "@actions/github";
+import { getInput, setFailed } from "@actions/core";
+import { context, getOctokit } from "@actions/github";
+import {} from "@octokit/webhooks";
 
 const token =
   getInput("token") || process.env.GH_PAT || process.env.GITHUB_TOKEN;
@@ -8,18 +9,13 @@ export const run = async () => {
   if (!token) throw new Error("GitHub token not found");
   const octokit = getOctokit(token);
 
-  const ms: string = getInput("milliseconds");
-  debug(`Waiting ${ms} milliseconds ...`);
+  /**
+   * This action will only work on `pull_request` events
+   */
+  if (!context.payload.pull_request)
+    return console.log("No pull request found");
 
-  debug(new Date().toTimeString());
-  await wait(parseInt(ms, 10));
-  debug(new Date().toTimeString());
-
-  setOutput("time", new Date().toTimeString());
-};
-
-export const wait = (milliseconds: number) => {
-  return new Promise((resolve) => setTimeout(() => resolve(), milliseconds));
+  const pullRequest = context.payload.pull_request;
 };
 
 run()
