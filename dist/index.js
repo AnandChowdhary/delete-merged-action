@@ -1363,7 +1363,7 @@ exports.getUserAgent = getUserAgent;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.wait = exports.run = void 0;
+exports.run = void 0;
 const core_1 = __webpack_require__(470);
 const github_1 = __webpack_require__(469);
 const token = core_1.getInput("token") || process.env.GH_PAT || process.env.GITHUB_TOKEN;
@@ -1371,15 +1371,14 @@ exports.run = async () => {
     if (!token)
         throw new Error("GitHub token not found");
     const octokit = github_1.getOctokit(token);
-    const ms = core_1.getInput("milliseconds");
-    core_1.debug(`Waiting ${ms} milliseconds ...`);
-    core_1.debug(new Date().toTimeString());
-    await exports.wait(parseInt(ms, 10));
-    core_1.debug(new Date().toTimeString());
-    core_1.setOutput("time", new Date().toTimeString());
-};
-exports.wait = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(() => resolve(), milliseconds));
+    /**
+     * This action will only work on `pull_request` events
+     */
+    if (!github_1.context.payload.pull_request)
+        return console.log("No pull request found");
+    const pullRequest = github_1.context.payload.pull_request
+        .body;
+    console.log("Pull number", pullRequest.pull_request);
 };
 exports.run()
     .then(() => { })
