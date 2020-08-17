@@ -1,14 +1,14 @@
 name: "delete-merged-action"
-description: "GitHub Actions starter for TypeScript with automated releases"
+description: "Automatically delete merged branches (highly configurable)"
 author: "Koj <https://github.com/koj.co>"
 inputs:
   milliseconds:
-    required: true
+    required: false
     description: "Number of milliseconds to wait"
     default: "1000"
 runs:
   using: "node12"
   main: "dist/index.js"
 branding:
-  icon: "umbrella"
-  color: "purple"
+  icon: "trash"
+  color: "red"
