@@ -24,6 +24,19 @@ export const run = async () => {
     pullRequest.pull_request.merged,
     (pullRequest as any).merged
   );
+
+  /**
+   * Pull request has been merged
+   */
+  if (pullRequest.pull_request.merged) {
+    try {
+      await octokit.git.deleteRef({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        ref: pullRequest.pull_request.base.ref,
+      });
+    } catch (error) {}
+  }
 };
 
 run()
