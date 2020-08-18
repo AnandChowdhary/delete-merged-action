@@ -1,6 +1,7 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { EventPayloads } from "@octokit/webhooks";
+import minimatch from "minimatch";
 
 const token =
   getInput("token") || process.env.GH_PAT || process.env.GITHUB_TOKEN;
@@ -18,13 +19,22 @@ export const run = async () => {
   const pullRequest = (context as any).payload
     .pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest;
 
+  const branches = (getInput("branches") || "")
+    .split(",")
+    .map((branch) => branch.trim());
+
+  let shouldMerge = false;
+  branches.forEach((rule) => {
+    shouldMerge = shouldMerge || minimatch(pullRequest.base.ref, rule);
+  });
+
   /**
    * Pull request has been merged
    */
-  if (pullRequest.merged) {
+  if (pullRequest.merged && shouldMerge) {
     try {
       if (
-        !(getInput("protectBranches") || "")
+        !(getInput("branches") || "")
           .split(",")
           .map((branch) => branch.trim())
           .includes(pullRequest.base.ref)

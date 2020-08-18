@@ -2,10 +2,10 @@ name: "delete-merged-action"
 description: "Automatically delete merged branches (highly configurable)"
 author: "Koj <https://github.com/koj.co>"
 inputs:
-  protectBranches:
+  branches:
     required: false
-    description: "Don't delete these branches"
-    default: "master"
+    description: "List of branches to delete"
+    default: "*,!master,!main"
 runs:
   using: "node12"
   main: "dist/index.js"
