@@ -1378,9 +1378,6 @@ exports.run = async () => {
         return console.log("No pull request found");
     const pullRequest = github_1.context.payload
         .pull_request;
-    console.log("Pull number", pullRequest);
-    console.log("Full payload", JSON.stringify(github_1.context.payload));
-    console.log("Merged", pullRequest.merged, pullRequest.merged);
     /**
      * Pull request has been merged
      */
