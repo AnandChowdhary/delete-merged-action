@@ -1,24 +1,10 @@
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 import { EventPayloads } from "@octokit/webhooks";
-import minimatch from "minimatch";
+import { defaultValue, shouldMerge } from "./util";
 
 const token =
   getInput("token") || process.env.GH_PAT || process.env.GITHUB_TOKEN;
-
-/**
- * Whether a branch should be deleted
- * @param branch - Name of branch
- * @param rules - List of glob rules
- */
-const shouldMerge = (branch: string, rules?: string) => {
-  const branches = (rules || "").split(",").map((branch) => branch.trim());
-  let shouldMerge = false;
-  branches.forEach((rule) => {
-    shouldMerge = shouldMerge || minimatch(branch, rule);
-  });
-  return shouldMerge;
-};
 
 export const run = async () => {
   if (!token) throw new Error("GitHub token not found");
@@ -42,7 +28,7 @@ export const run = async () => {
   ) {
     try {
       if (
-        !(getInput("branches") || "")
+        !(getInput("branches") || defaultValue)
           .split(",")
           .map((branch) => branch.trim())
           .includes(pullRequest.base.ref)
