@@ -1,6 +1,6 @@
 import minimatch from "minimatch";
 
-export const defaultValue = "*,!master,!main";
+export const defaultValue = "!master,!main,*";
 
 /**
  * Whether a branch should be deleted
@@ -9,9 +9,6 @@ export const defaultValue = "*,!master,!main";
  */
 export const shouldMerge = (branch: string, rules?: string) => {
   const branches = (rules || "").split(",").map((branch) => branch.trim());
-  let shouldMerge = false;
-  branches.forEach((rule) => {
-    shouldMerge = shouldMerge || minimatch(branch, rule);
-  });
+  let shouldMerge = branches.every((rule) => minimatch(branch, rule));
   return shouldMerge;
 };
