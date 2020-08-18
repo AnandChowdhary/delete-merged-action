@@ -30,11 +30,17 @@ export const run = async () => {
    */
   if (pullRequest.pull_request.merged) {
     try {
-      await octokit.git.deleteRef({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        ref: pullRequest.pull_request.base.ref,
-      });
+      if (
+        !(getInput("protectBranches") || "")
+          .split(",")
+          .map((branch) => branch.trim())
+          .includes(pullRequest.pull_request.base.ref)
+      )
+        await octokit.git.deleteRef({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          ref: pullRequest.pull_request.base.ref,
+        });
     } catch (error) {}
   }
 };
