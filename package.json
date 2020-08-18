@@ -1,6 +1,6 @@
 {
   "name": "delete-merged-action",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Automatically delete merged branches (highly configurable)",
   "main": "dist/index.js",
   "scripts": {
