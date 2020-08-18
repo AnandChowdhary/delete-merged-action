@@ -16,30 +16,26 @@ export const run = async () => {
     return console.log("No pull request found");
 
   const pullRequest = (context as any).payload.pull_request
-    .body as EventPayloads.WebhookPayloadPullRequest;
+    .body as EventPayloads.WebhookPayloadPullRequestPullRequest;
 
-  console.log("Pull number", pullRequest.pull_request);
-  console.log(
-    "Merged",
-    pullRequest.pull_request.merged,
-    (pullRequest as any).merged
-  );
+  console.log("Pull number", pullRequest);
+  console.log("Merged", pullRequest.merged, (pullRequest as any).merged);
 
   /**
    * Pull request has been merged
    */
-  if (pullRequest.pull_request.merged) {
+  if (pullRequest.merged) {
     try {
       if (
         !(getInput("protectBranches") || "")
           .split(",")
           .map((branch) => branch.trim())
-          .includes(pullRequest.pull_request.base.ref)
+          .includes(pullRequest.base.ref)
       )
         await octokit.git.deleteRef({
           owner: context.repo.owner,
           repo: context.repo.repo,
-          ref: pullRequest.pull_request.base.ref,
+          ref: pullRequest.base.ref,
         });
     } catch (error) {}
   }
