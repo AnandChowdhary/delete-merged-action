@@ -1378,21 +1378,21 @@ exports.run = async () => {
         return console.log("No pull request found");
     const pullRequest = github_1.context.payload.pull_request
         .body;
-    console.log("Pull number", pullRequest.pull_request);
-    console.log("Merged", pullRequest.pull_request.merged, pullRequest.merged);
+    console.log("Pull number", pullRequest);
+    console.log("Merged", pullRequest.merged, pullRequest.merged);
     /**
      * Pull request has been merged
      */
-    if (pullRequest.pull_request.merged) {
+    if (pullRequest.merged) {
         try {
             if (!(core_1.getInput("protectBranches") || "")
                 .split(",")
                 .map((branch) => branch.trim())
-                .includes(pullRequest.pull_request.base.ref))
+                .includes(pullRequest.base.ref))
                 await octokit.git.deleteRef({
                     owner: github_1.context.repo.owner,
                     repo: github_1.context.repo.repo,
-                    ref: pullRequest.pull_request.base.ref,
+                    ref: pullRequest.base.ref,
                 });
         }
         catch (error) { }
