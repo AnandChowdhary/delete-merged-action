@@ -15,8 +15,8 @@ export const run = async () => {
   if (!context.payload.pull_request)
     return console.log("No pull request found");
 
-  const pullRequest = (context as any).payload.pull_request
-    .body as EventPayloads.WebhookPayloadPullRequestPullRequest;
+  const pullRequest = (context as any).payload
+    .pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest;
 
   console.log("Pull number", pullRequest);
   console.log("Merged", pullRequest.merged, (pullRequest as any).merged);
