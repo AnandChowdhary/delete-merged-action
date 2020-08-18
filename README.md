@@ -9,6 +9,8 @@ GitHub Action to automatically delete merged branches, with a highly configurabl
 
 ## ⚙️ Usage
 
+You might not need this action, because GitHub natively supports deleting merged branches. However, you can configure exactly which branches to delete using this action. It also works well for GitHub Free accounts that don't support protected branches.
+
 ### Inputs
 
 #### `branches`
@@ -19,7 +21,7 @@ Glob rules for names of branches to delete, defaults to `!master, !main, *`
 
 #### `GITHUB_TOKEN` (required)
 
-GitHub token to delete branches: `GITHUB_TOKEN: ${{ secrets.GH_PAT }}`
+GitHub token to delete branches: `GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}`
 
 ### Example
 
@@ -41,7 +43,7 @@ jobs:
         with:
           branches: "!master, !production, *"
         env:
-          GITHUB_TOKEN: "${{ GITHUB_TOKEN.GH_PAT }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
 ## 📄 License
