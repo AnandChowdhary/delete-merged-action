@@ -2517,26 +2517,27 @@ exports.run = async () => {
         return console.log("No pull request found");
     const pullRequest = github_1.context.payload
         .pull_request;
+    const branchName = pullRequest.head.ref;
     console.log("Branches to delete are", core_1.getInput("branches"));
-    console.log("This branch is", pullRequest.base.ref);
+    console.log("This branch is", branchName);
     const pullRequestInfo = await octokit.pulls.get({
         owner: github_1.context.repo.owner,
         repo: github_1.context.repo.repo,
         pull_number: pullRequest.number,
     });
     console.log("Is this PR merged?", pullRequestInfo.data.merged);
-    console.log("Should we delete this branch?", util_1.shouldMerge(pullRequest.base.ref, core_1.getInput("branches")));
+    console.log("Should we delete this branch?", util_1.shouldMerge(branchName, core_1.getInput("branches")));
     /**
      * Pull request has been merged
      */
     if (pullRequestInfo.data.merged &&
-        util_1.shouldMerge(pullRequest.base.ref, core_1.getInput("branches"))) {
+        util_1.shouldMerge(branchName, core_1.getInput("branches"))) {
         console.log("Proceeding to delete branch");
         try {
             await octokit.git.deleteRef({
                 owner: github_1.context.repo.owner,
                 repo: github_1.context.repo.repo,
-                ref: pullRequest.base.ref,
+                ref: branchName,
             });
             console.log("Deleted branch");
         }
