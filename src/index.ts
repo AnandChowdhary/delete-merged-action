@@ -18,9 +18,10 @@ export const run = async () => {
 
   const pullRequest = (context as any).payload
     .pull_request as EventPayloads.WebhookPayloadPullRequestPullRequest;
+  const branchName = pullRequest.head.ref;
 
   console.log("Branches to delete are", getInput("branches"));
-  console.log("This branch is", pullRequest.base.ref);
+  console.log("This branch is", branchName);
 
   const pullRequestInfo = await octokit.pulls.get({
     owner: context.repo.owner,
@@ -30,7 +31,7 @@ export const run = async () => {
   console.log("Is this PR merged?", pullRequestInfo.data.merged);
   console.log(
     "Should we delete this branch?",
-    shouldMerge(pullRequest.base.ref, getInput("branches"))
+    shouldMerge(branchName, getInput("branches"))
   );
 
   /**
@@ -38,14 +39,14 @@ export const run = async () => {
    */
   if (
     pullRequestInfo.data.merged &&
-    shouldMerge(pullRequest.base.ref, getInput("branches"))
+    shouldMerge(branchName, getInput("branches"))
   ) {
     console.log("Proceeding to delete branch");
     try {
       await octokit.git.deleteRef({
         owner: context.repo.owner,
         repo: context.repo.repo,
-        ref: pullRequest.base.ref,
+        ref: branchName,
       });
       console.log("Deleted branch");
     } catch (error) {
