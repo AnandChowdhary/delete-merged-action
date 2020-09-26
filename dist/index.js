@@ -2519,33 +2519,32 @@ exports.run = async () => {
         .pull_request;
     console.log("Branches to delete are", core_1.getInput("branches"));
     console.log("This branch is", pullRequest.base.ref);
+    const pullRequestInfo = await octokit.pulls.get({
+        owner: github_1.context.repo.owner,
+        repo: github_1.context.repo.repo,
+        pull_number: pullRequest.number,
+    });
+    console.log("Is this PR merged?", pullRequestInfo.data.merged);
+    console.log("Should we delete this branch?", util_1.shouldMerge(pullRequest.base.ref, core_1.getInput("branches")));
     /**
      * Pull request has been merged
      */
-    if (pullRequest.merged &&
+    if (pullRequestInfo.data.merged &&
         util_1.shouldMerge(pullRequest.base.ref, core_1.getInput("branches"))) {
-        console.log("This PR is merged, deleting");
+        console.log("Proceeding to delete branch");
         try {
-            if (!(core_1.getInput("branches") || util_1.defaultValue)
-                .split(",")
-                .map((branch) => branch.trim())
-                .includes(pullRequest.base.ref)) {
-                await octokit.git.deleteRef({
-                    owner: github_1.context.repo.owner,
-                    repo: github_1.context.repo.repo,
-                    ref: pullRequest.base.ref,
-                });
-            }
-            else {
-                console.log("Not deleting this branch");
-            }
+            await octokit.git.deleteRef({
+                owner: github_1.context.repo.owner,
+                repo: github_1.context.repo.repo,
+                ref: pullRequest.base.ref,
+            });
+            console.log("Deleted branch");
         }
         catch (error) {
             console.log("Got an error in deleting", error);
         }
     }
     else {
-        console.log("Is this PR merged?", pullRequest.merged);
         console.log("Not deleting this branch");
     }
 };
