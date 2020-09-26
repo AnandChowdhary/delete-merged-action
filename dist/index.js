@@ -2517,23 +2517,36 @@ exports.run = async () => {
         return console.log("No pull request found");
     const pullRequest = github_1.context.payload
         .pull_request;
+    console.log("Branches to delete are", core_1.getInput("branches"));
+    console.log("This branch is", pullRequest.base.ref);
     /**
      * Pull request has been merged
      */
     if (pullRequest.merged &&
         util_1.shouldMerge(pullRequest.base.ref, core_1.getInput("branches"))) {
+        console.log("This PR is merged, deleting");
         try {
             if (!(core_1.getInput("branches") || util_1.defaultValue)
                 .split(",")
                 .map((branch) => branch.trim())
-                .includes(pullRequest.base.ref))
+                .includes(pullRequest.base.ref)) {
                 await octokit.git.deleteRef({
                     owner: github_1.context.repo.owner,
                     repo: github_1.context.repo.repo,
                     ref: pullRequest.base.ref,
                 });
+            }
+            else {
+                console.log("Not deleting this branch");
+            }
         }
-        catch (error) { }
+        catch (error) {
+            console.log("Got an error in deleting", error);
+        }
+    }
+    else {
+        console.log("Is this PR merged?", pullRequest.merged);
+        console.log("Not deleting this branch");
     }
 };
 exports.run()
