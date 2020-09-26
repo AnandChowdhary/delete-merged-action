@@ -2537,7 +2537,7 @@ exports.run = async () => {
             await octokit.git.deleteRef({
                 owner: github_1.context.repo.owner,
                 repo: github_1.context.repo.repo,
-                ref: `refs/heads/${branchName}`,
+                ref: `heads/${branchName}`,
             });
             console.log("Deleted branch");
         }
