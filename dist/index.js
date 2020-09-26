@@ -6962,8 +6962,13 @@ exports.defaultValue = "!master,!main,*";
  * @param rules - List of glob rules
  */
 exports.shouldMerge = (branch, rules) => {
+    console.log("Start: Debug should delete");
     const branches = (rules || "").split(",").map((branch) => branch.trim());
-    let shouldMerge = branches.every((rule) => minimatch_1.default(branch, rule));
+    let shouldMerge = branches.every((rule) => {
+        console.log(branch, rule, minimatch_1.default(branch, rule));
+        return minimatch_1.default(branch, rule);
+    });
+    console.log("End: Debug should delete, result:", shouldMerge);
     return shouldMerge;
 };
 
