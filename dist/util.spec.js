@@ -38,3 +38,4 @@ describe("should merge with input", () => {
         expect(util_1.shouldMerge("hello-world", "example-*")).toBeFalsy();
     });
 });
+//# sourceMappingURL=util.spec.js.map

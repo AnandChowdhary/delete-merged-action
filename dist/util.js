@@ -21,3 +21,4 @@ exports.shouldMerge = (branch, rules) => {
     console.log("End: Debug should delete, result:", shouldMerge);
     return shouldMerge;
 };
+//# sourceMappingURL=util.js.map

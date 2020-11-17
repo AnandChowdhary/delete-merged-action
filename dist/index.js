@@ -2617,7 +2617,7 @@ exports.run()
     console.error("ERROR", error);
     core_1.setFailed(error.message);
 });
-
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -7037,7 +7037,7 @@ exports.shouldMerge = (branch, rules) => {
     console.log("End: Debug should delete, result:", shouldMerge);
     return shouldMerge;
 };
-
+//# sourceMappingURL=util.js.map
 
 /***/ }),
 
