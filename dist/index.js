@@ -2568,7 +2568,7 @@ const core_1 = __webpack_require__(470);
 const github_1 = __webpack_require__(469);
 const util_1 = __webpack_require__(758);
 const token = core_1.getInput("token") || process.env.GH_PAT || process.env.GITHUB_TOKEN;
-exports.run = async () => {
+const run = async () => {
     if (!token)
         throw new Error("GitHub token not found");
     const octokit = github_1.getOctokit(token);
@@ -2611,6 +2611,7 @@ exports.run = async () => {
         console.log("Not deleting this branch");
     }
 };
+exports.run = run;
 exports.run()
     .then(() => { })
     .catch((error) => {
@@ -7027,7 +7028,7 @@ exports.defaultValue = "!master,!main,*";
  * @param branch - Name of branch
  * @param rules - List of glob rules
  */
-exports.shouldMerge = (branch, rules) => {
+const shouldMerge = (branch, rules) => {
     console.log("Start: Debug should delete");
     const branches = (rules || "").split(",").map((branch) => branch.trim());
     let shouldMerge = branches.every((rule) => {
@@ -7037,6 +7038,7 @@ exports.shouldMerge = (branch, rules) => {
     console.log("End: Debug should delete, result:", shouldMerge);
     return shouldMerge;
 };
+exports.shouldMerge = shouldMerge;
 //# sourceMappingURL=util.js.map
 
 /***/ }),

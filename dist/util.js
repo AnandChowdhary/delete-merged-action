@@ -11,7 +11,7 @@ exports.defaultValue = "!master,!main,*";
  * @param branch - Name of branch
  * @param rules - List of glob rules
  */
-exports.shouldMerge = (branch, rules) => {
+const shouldMerge = (branch, rules) => {
     console.log("Start: Debug should delete");
     const branches = (rules || "").split(",").map((branch) => branch.trim());
     let shouldMerge = branches.every((rule) => {
@@ -21,4 +21,5 @@ exports.shouldMerge = (branch, rules) => {
     console.log("End: Debug should delete, result:", shouldMerge);
     return shouldMerge;
 };
+exports.shouldMerge = shouldMerge;
 //# sourceMappingURL=util.js.map
