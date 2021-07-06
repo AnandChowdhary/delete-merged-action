@@ -41,7 +41,7 @@
   "dependencies": {
     "@actions/core": "^1.2.4",
     "@actions/github": "^4.0.0",
-    "@octokit/webhooks": "^7.11.0",
+    "@octokit/webhooks": "^9.9.0",
     "minimatch": "^3.0.4"
   },
   "jest": {
